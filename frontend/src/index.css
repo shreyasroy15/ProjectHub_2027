@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #080B12;
+    --bg-card: #101620;
+    --bg-card-hover: #151D2A;
+    --bg-surface: #161F2E;
+    --border-color: #202938;
+    --border-highlight: #2A3649;
+    --accent-cyan: #00E5FF;
+    --accent-blue: #38BDF8;
+    --accent-green: #10B981;
+    --accent-amber: #F59E0B;
+    --accent-purple: #A855F7;
+    --accent-red: #EF4444;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: #E2E8F0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Engineering Technical Grid Background */
+.bg-tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(32, 41, 56, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(32, 41, 56, 0.4) 1px, transparent 1px);
+}
+
+.bg-circuit-pattern {
+  background-color: #080B12;
+  background-image: radial-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px), radial-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+
+/* CAD Blueprint Grid */
+.bg-blueprint-grid {
+  background-color: #09131F;
+  background-image: 
+    linear-gradient(rgba(0, 229, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+
+/* Technical Glow & Borders */
+.border-subtle {
+  border: 1px solid var(--border-color);
+}
+
+.border-subtle-hover:hover {
+  border-color: #38BDF8;
+}
+
+.tech-glow-cyan {
+  box-shadow: 0 0 20px -5px rgba(0, 229, 255, 0.25);
+}
+
+.tech-glow-blue {
+  box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.2);
+}
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202938;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

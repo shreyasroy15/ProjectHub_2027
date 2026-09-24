@@ -1,0 +1,15 @@
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/bin/Debug/net10.0/IoTForge.Application.deps.json
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/bin/Debug/net10.0/IoTForge.Application.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/bin/Debug/net10.0/IoTForge.Application.pdb
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/bin/Debug/net10.0/IoTForge.Domain.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/bin/Debug/net10.0/IoTForge.Domain.pdb
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.csproj.AssemblyReference.cache
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.AssemblyInfoInputs.cache
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.AssemblyInfo.cs
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.csproj.CoreCompileInputs.cache
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.A6C81450.Up2Date
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/refint/IoTForge.Application.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/IoTForge.Application.pdb
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Application/obj/Debug/net10.0/ref/IoTForge.Application.dll

@@ -1,0 +1,6 @@
+{
+  "IoTForge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/shreyas\/Projects\/IOT_Project\/backend\/IoTForge.API",
+  "IoTForge.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/shreyas\/Projects\/IOT_Project\/backend\/IoTForge.Application",
+  "IoTForge.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/shreyas\/Projects\/IOT_Project\/backend\/IoTForge.Domain",
+  "IoTForge.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/shreyas\/Projects\/IOT_Project\/backend\/IoTForge.Infrastructure"
+}

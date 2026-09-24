@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="IoTForge.API/IoTForge.API.csproj" />
+  <Project Path="IoTForge.Application/IoTForge.Application.csproj" />
+  <Project Path="IoTForge.Domain/IoTForge.Domain.csproj" />
+  <Project Path="IoTForge.Infrastructure/IoTForge.Infrastructure.csproj" />
+  <Project Path="IoTForge.Tests/IoTForge.Tests.csproj" />
+</Solution>

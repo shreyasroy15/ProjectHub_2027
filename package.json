@@ -1,0 +1,16 @@
+{
+  "name": "iotforge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoTForge — AI-Powered IoT Project Builder",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "test:backend": "dotnet test backend/IoTForge.Tests/IoTForge.Tests.csproj",
+    "start:backend": "dotnet run --project backend/IoTForge.API/IoTForge.API.csproj --urls http://0.0.0.0:5000"
+  },
+  "keywords": ["iot", "hardware", "engineering", "ai", "cad", "circuit"],
+  "author": "IoTForge Team",
+  "license": "MIT"
+}

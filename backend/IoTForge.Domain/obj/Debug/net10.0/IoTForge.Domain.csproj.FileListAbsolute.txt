@@ -1,0 +1,11 @@
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/bin/Debug/net10.0/IoTForge.Domain.deps.json
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/bin/Debug/net10.0/IoTForge.Domain.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/bin/Debug/net10.0/IoTForge.Domain.pdb
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.AssemblyInfoInputs.cache
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.AssemblyInfo.cs
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.csproj.CoreCompileInputs.cache
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/refint/IoTForge.Domain.dll
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/IoTForge.Domain.pdb
+/home/shreyas/Projects/IOT_Project/backend/IoTForge.Domain/obj/Debug/net10.0/ref/IoTForge.Domain.dll

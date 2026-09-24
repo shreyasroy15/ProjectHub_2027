@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: iotforge-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: iotforge
+      POSTGRES_USER: iotforge
+      POSTGRES_PASSWORD: iotforge_secret_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iotforge -d iotforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: iotforge-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/Dockerfile.backend
+    container_name: iotforge-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=iotforge;Username=iotforge;Password=iotforge_secret_password
+      - Jwt__Key=super_secret_iotforge_engineering_jwt_signing_key_2026_production_grade_32bytes_min
+      - Jwt__Issuer=IoTForge
+      - Jwt__Audience=IoTForgeUsers
+      - Ai__Provider=${AI_PROVIDER:-Hybrid}
+      - Ai__ApiKey=${AI_API_KEY:-}
+      - Ai__Model=${AI_MODEL:-gemini-1.5-flash}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: iotforge-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+    driver: local

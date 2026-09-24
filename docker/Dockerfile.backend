@@ -1,0 +1,29 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy solution and project files
+COPY IoTForge.slnx ./
+COPY IoTForge.Domain/IoTForge.Domain.csproj IoTForge.Domain/
+COPY IoTForge.Application/IoTForge.Application.csproj IoTForge.Application/
+COPY IoTForge.Infrastructure/IoTForge.Infrastructure.csproj IoTForge.Infrastructure/
+COPY IoTForge.API/IoTForge.API.csproj IoTForge.API/
+COPY IoTForge.Tests/IoTForge.Tests.csproj IoTForge.Tests/
+
+# Restore dependencies
+RUN dotnet restore IoTForge.API/IoTForge.API.csproj
+
+# Copy full source and publish
+COPY . .
+WORKDIR /src/IoTForge.API
+RUN dotnet publish -c Release -o /app/publish
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:5000
+EXPOSE 5000
+
+ENTRYPOINT ["dotnet", "IoTForge.API.dll"]
