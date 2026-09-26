@@ -173,7 +173,7 @@ export const DashboardPage: React.FC = () => {
             ) : projects.length === 0 ? (
               <EmptyState
                 title="No projects yet"
-                description="Describe your first IoT idea and IoTForge will synthesize the complete schematic, wiring, and code structure for you."
+                description="Describe your first IoT idea and ProjectHub will synthesize the complete schematic, wiring, and code structure for you."
                 actionText="Create First Project"
                 onAction={() => navigate('/projects/new')}
               />

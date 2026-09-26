@@ -87,7 +87,7 @@ export const DocsPage: React.FC = () => {
           <div>
             <h1 className="text-2xl font-bold text-white flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-cyan-400" />
-              <span>IoTForge Engineering Documentation</span>
+              <span>ProjectHub Engineering Documentation</span>
             </h1>
             <p className="text-xs text-slate-400 mt-1">Standard operating procedures, pinout guides, and safety protocols</p>
           </div>

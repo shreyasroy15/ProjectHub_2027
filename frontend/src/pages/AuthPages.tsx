@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Cpu, ArrowRight, Lock, Mail, User, ShieldCheck, KeyRound } from 'lucide-react';
+import { LayoutGrid, ArrowRight, Lock, Mail, User, ShieldCheck, KeyRound } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
@@ -22,8 +22,15 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
     try {
       await login(email, password);
-      success('Logged in successfully. Welcome to IoTForge.');
-      navigate('/dashboard');
+      success('Logged in successfully. Welcome to ProjectHub.');
+      
+      const savedUserStr = localStorage.getItem('iotforge_user');
+      const savedUser = savedUserStr ? JSON.parse(savedUserStr) : null;
+      if (savedUser?.role === 2 || savedUser?.role === 'Admin' || savedUser?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err: any) {
       error(err.message || 'Login failed.');
     } finally {
@@ -35,9 +42,9 @@ export const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-[#080B12] bg-tech-grid flex flex-col justify-center items-center px-4 py-12">
       <Link to="/" className="flex items-center gap-2.5 mb-8 group">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 font-bold shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-          <Cpu className="w-6 h-6 text-slate-950" />
+          <LayoutGrid className="w-6 h-6 text-slate-950" />
         </div>
-        <span className="text-2xl font-bold tracking-tight text-white">IoTForge</span>
+        <span className="text-2xl font-bold tracking-tight text-white">ProjectHub</span>
       </Link>
 
       <div className="w-full max-w-md rounded-2xl border border-[#202938] bg-[#101620] p-8 shadow-2xl">
@@ -122,8 +129,15 @@ export const SignupPage: React.FC = () => {
     setLoading(true);
     try {
       await register(name, email, password, confirmPassword);
-      success('Account created successfully! Welcome to IoTForge.');
-      navigate('/dashboard');
+      success('Account created successfully! Welcome to ProjectHub.');
+      
+      const savedUserStr = localStorage.getItem('iotforge_user');
+      const savedUser = savedUserStr ? JSON.parse(savedUserStr) : null;
+      if (savedUser?.role === 2 || savedUser?.role === 'Admin' || savedUser?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err: any) {
       error(err.message || 'Registration failed.');
     } finally {
@@ -135,9 +149,9 @@ export const SignupPage: React.FC = () => {
     <div className="min-h-screen bg-[#080B12] bg-tech-grid flex flex-col justify-center items-center px-4 py-12">
       <Link to="/" className="flex items-center gap-2.5 mb-8 group">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 font-bold shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-          <Cpu className="w-6 h-6 text-slate-950" />
+          <LayoutGrid className="w-6 h-6 text-slate-950" />
         </div>
-        <span className="text-2xl font-bold tracking-tight text-white">IoTForge</span>
+        <span className="text-2xl font-bold tracking-tight text-white">ProjectHub</span>
       </Link>
 
       <div className="w-full max-w-md rounded-2xl border border-[#202938] bg-[#101620] p-8 shadow-2xl">
@@ -237,9 +251,9 @@ export const ForgotPasswordPage: React.FC = () => {
     <div className="min-h-screen bg-[#080B12] bg-tech-grid flex flex-col justify-center items-center px-4 py-12">
       <Link to="/" className="flex items-center gap-2.5 mb-8">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 font-bold shadow-lg shadow-cyan-500/20">
-          <Cpu className="w-6 h-6 text-slate-950" />
+          <LayoutGrid className="w-6 h-6 text-slate-950" />
         </div>
-        <span className="text-2xl font-bold tracking-tight text-white">IoTForge</span>
+        <span className="text-2xl font-bold tracking-tight text-white">ProjectHub</span>
       </Link>
 
       <div className="w-full max-w-md rounded-2xl border border-[#202938] bg-[#101620] p-8 shadow-2xl">

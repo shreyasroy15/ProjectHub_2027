@@ -4,7 +4,7 @@ import { Cpu, ArrowRight, User as UserIcon, LayoutDashboard, LogOut } from 'luci
 import { useAuth } from '../../context/AuthContext';
 
 export const Navbar: React.FC = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-              IoTForge
+              ProjectHub
               <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/40">
                 SaaS
               </span>
@@ -29,7 +29,6 @@ export const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
           <a href="#how-it-works" className="hover:text-cyan-400 transition-colors">How It Works</a>
           <a href="#features" className="hover:text-cyan-400 transition-colors">Features</a>
-          <a href="#examples" className="hover:text-cyan-400 transition-colors">Examples</a>
           <a href="#tech" className="hover:text-cyan-400 transition-colors">Tech Matrix</a>
           <a href="#faq" className="hover:text-cyan-400 transition-colors">FAQ</a>
         </div>
@@ -38,13 +37,22 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-3">
           {isAuthenticated ? (
             <div className="flex items-center gap-3">
-              <Link
-                to="/dashboard"
-                className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-950/30 text-cyan-300 text-sm font-medium hover:bg-cyan-950/60 transition-colors"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-950/30 text-cyan-300 text-sm font-medium hover:bg-cyan-950/60 transition-colors"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  <span>Admin Panel</span>
+                </Link>
+              )}
+              <div className="flex items-center gap-2.5 ml-1 mr-1">
+                <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-slate-300">
+                  {user?.name.charAt(0) || 'U'}
+                </div>
+                <span className="text-sm font-semibold text-slate-200 hidden sm:inline-block">{user?.name}</span>
+              </div>
+              <div className="h-5 w-px bg-[#202938] mx-1" />
               <button
                 onClick={() => { logout(); navigate('/'); }}
                 className="p-2 rounded-lg border border-[#202938] hover:border-rose-500/40 text-slate-400 hover:text-rose-400 transition-colors"

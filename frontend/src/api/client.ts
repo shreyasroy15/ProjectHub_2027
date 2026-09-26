@@ -289,6 +289,59 @@ class ApiClient {
       method: 'POST'
     });
   }
+
+  async updateUser(userId: string, data: any): Promise<void> {
+    return this.request<void>(`/admin/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+  }
+
+  async getContacts(): Promise<any[]> {
+    return this.request<any[]>('/admin/contacts');
+  }
+
+  async getProducts(): Promise<any[]> {
+    return this.request<any[]>('/admin/products');
+  }
+
+  async addProduct(data: any): Promise<any> {
+    return this.request<any>('/admin/products', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  }
+
+  async updateProduct(id: string, data: any): Promise<any> {
+    return this.request<any>(`/admin/products/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    return this.request<void>(`/admin/products/${id}`, { method: 'DELETE' });
+  }
+
+  async getGallery(): Promise<any[]> {
+    return this.request<any[]>('/admin/gallery');
+  }
+
+  async uploadGalleryImage(file: File, title: string): Promise<any> {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('title', title);
+    
+    // Note: Request handles FormData naturally and skips setting JSON Content-Type
+    return this.request<any>('/admin/gallery', {
+      method: 'POST',
+      body: formData
+    });
+  }
+
+  async deleteGalleryImage(id: string): Promise<void> {
+    return this.request<void>(`/admin/gallery/${id}`, { method: 'DELETE' });
+  }
 }
 
 export const api = new ApiClient();

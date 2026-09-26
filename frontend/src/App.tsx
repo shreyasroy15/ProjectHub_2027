@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
   }
 });
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean }> = ({ children, adminOnly = false }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean; preventAdmin?: boolean }> = ({ children, adminOnly = false, preventAdmin = false }) => {
   const { isAuthenticated, isAdmin, isLoading } = useAuth();
 
   if (isLoading) {
@@ -40,7 +40,15 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; adminOnly?: boolean 
   }
 
   if (adminOnly && !isAdmin) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
+  }
+
+  if (preventAdmin) {
+    if (isAdmin) {
+      return <Navigate to="/admin" replace />;
+    } else {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return <>{children}</>;
@@ -61,37 +69,37 @@ export function App() {
 
               {/* Authenticated Engineering Workspace Routes */}
               <Route path="/dashboard" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <DashboardPage />
                 </ProtectedRoute>
               } />
               <Route path="/projects/new" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <ProjectNewPage />
                 </ProtectedRoute>
               } />
               <Route path="/projects/:projectId" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <ProjectWorkspacePage />
                 </ProtectedRoute>
               } />
               <Route path="/components" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <ComponentsPage />
                 </ProtectedRoute>
               } />
               <Route path="/templates" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <TemplatesPage />
                 </ProtectedRoute>
               } />
               <Route path="/docs" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <DocsPage />
                 </ProtectedRoute>
               } />
               <Route path="/settings" element={
-                <ProtectedRoute>
+                <ProtectedRoute preventAdmin>
                   <SettingsPage />
                 </ProtectedRoute>
               } />

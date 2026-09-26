@@ -64,7 +64,7 @@ export const ProjectNewPage: React.FC = () => {
         {
           id: 'welcome',
           sender: 'assistant',
-          text: "Welcome to the IoTForge Hardware Builder. Describe your IoT idea below. I will analyze your requirements, verify electrical compatibility, allocate pins, synthesize the BOM, and generate firmware code.",
+          text: "Welcome to the ProjectHub Hardware Builder. Describe your IoT idea below. I will analyze your requirements, verify electrical compatibility, allocate pins, synthesize the BOM, and generate firmware code.",
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);
@@ -171,7 +171,7 @@ export const ProjectNewPage: React.FC = () => {
                 >
                   <div className="flex items-center gap-2 mb-1 px-1">
                     <span className="text-[10px] font-mono text-slate-500 uppercase">
-                      {msg.sender === 'user' ? 'You' : 'IoTForge Engine'}
+                      {msg.sender === 'user' ? 'You' : 'ProjectHub Engine'}
                     </span>
                     <span className="text-[10px] text-slate-600 font-mono">{msg.timestamp}</span>
                   </div>

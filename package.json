@@ -10,7 +10,17 @@
     "test:backend": "dotnet test backend/IoTForge.Tests/IoTForge.Tests.csproj",
     "start:backend": "dotnet run --project backend/IoTForge.API/IoTForge.API.csproj --urls http://0.0.0.0:5000"
   },
-  "keywords": ["iot", "hardware", "engineering", "ai", "cad", "circuit"],
+  "keywords": [
+    "iot",
+    "hardware",
+    "engineering",
+    "ai",
+    "cad",
+    "circuit"
+  ],
   "author": "IoTForge Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "cloudinary": "^2.11.0"
+  }
 }

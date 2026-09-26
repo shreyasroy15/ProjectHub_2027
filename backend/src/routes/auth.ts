@@ -38,15 +38,22 @@ router.post('/register', async (req, res): Promise<any> => {
 router.post('/login', async (req, res): Promise<any> => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    // Find by either new 'email' or legacy 'Email'
+    const user = await User.findOne({ $or: [{ email }, { Email: email }] });
     
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    let isMatch = await bcrypt.compare(password, user.password);
+    const passwordHash = user.get('password') || user.get('PasswordHash');
     
-    if (!isMatch && password === user.password) {
+    if (!passwordHash) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    let isMatch = await bcrypt.compare(password, passwordHash);
+    
+    if (!isMatch && password === passwordHash) {
       isMatch = true;
     }
 
@@ -54,8 +61,12 @@ router.post('/login', async (req, res): Promise<any> => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '12h' });
-    res.json({ accessToken: token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    const role = user.get('role') || user.get('Role');
+    const name = user.get('name') || user.get('Name');
+    const userId = user._id;
+
+    const token = jwt.sign({ userId, role }, process.env.JWT_SECRET as string, { expiresIn: '12h' });
+    res.json({ accessToken: token, user: { id: userId, name, email, role } });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
@@ -63,11 +74,15 @@ router.post('/login', async (req, res): Promise<any> => {
 
 // Get Current User
 router.get('/me', authenticate, (req: AuthRequest, res) => {
+  const role = req.user.get('role') || req.user.get('Role');
+  const name = req.user.get('name') || req.user.get('Name');
+  const email = req.user.get('email') || req.user.get('Email');
+  
   res.json({
     id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    role: req.user.role
+    name,
+    email,
+    role
   });
 });
 

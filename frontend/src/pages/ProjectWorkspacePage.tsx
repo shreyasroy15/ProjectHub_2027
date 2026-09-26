@@ -301,7 +301,7 @@ export const ProjectWorkspacePage: React.FC = () => {
                   }`}
                 >
                   <span className="text-[10px] font-mono text-slate-500 block mb-1 uppercase">
-                    {m.role === 'user' ? 'You' : 'IoTForge Engineer'}
+                    {m.role === 'user' ? 'You' : 'ProjectHub Engineer'}
                   </span>
                   {m.content}
                 </div>

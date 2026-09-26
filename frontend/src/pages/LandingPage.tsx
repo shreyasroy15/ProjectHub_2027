@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   ShieldAlert,
   ChevronDown,
+  ChevronRight,
   Terminal,
   Radio,
   Server,
@@ -19,9 +20,12 @@ import {
 } from 'lucide-react';
 import { Navbar } from '../components/common/Navbar';
 import { Badge } from '../components/common/CommonUi';
+import { useAuth } from '../context/AuthContext';
+import { motion } from 'framer-motion';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [previewTab, setPreviewTab] = useState<'wiring' | 'code' | 'bom'>('wiring');
 
@@ -34,16 +38,16 @@ export const LandingPage: React.FC = () => {
 
   const faqs = [
     {
-      q: "Does IoTForge support electrical safety and voltage checks?",
-      a: "Yes! IoTForge runs an automated compatibility engine that checks 3.3V vs 5V logic compatibility, flags direct GPIO-to-motor connections that require relay or MOSFET drivers, detects pin collisions, and enforces isolation rules for high-voltage mains AC circuits."
+      q: "Does ProjectHub support electrical safety and voltage checks?",
+      a: "Yes! ProjectHub runs an automated compatibility engine that checks 3.3V vs 5V logic compatibility, flags direct GPIO-to-motor connections that require relay or MOSFET drivers, detects pin collisions, and enforces isolation rules for high-voltage mains AC circuits."
     },
     {
       q: "What microcontrollers and architectures are supported?",
-      a: "IoTForge has pre-configured electrical and pinout models for ESP32 (DevKit V1, S3, C3), STM32 (Blue Pill F103), Arduino Uno R3/Nano, Raspberry Pi 4 Model B, and RP2040 Raspberry Pi Pico W."
+      a: "ProjectHub has pre-configured electrical and pinout models for ESP32 (DevKit V1, S3, C3), STM32 (Blue Pill F103), Arduino Uno R3/Nano, Raspberry Pi 4 Model B, and RP2040 Raspberry Pi Pico W."
     },
     {
       q: "Is the generated firmware ready to flash?",
-      a: "Yes. IoTForge generates syntax-highlighted, compilation-ready C++ firmware for the Arduino framework, PlatformIO configuration environments, and ESP-IDF, complete with Wi-Fi reconnection loops, sensor libraries, and MQTT telemetry logic."
+      a: "Yes. ProjectHub generates syntax-highlighted, compilation-ready C++ firmware for the Arduino framework, PlatformIO configuration environments, and ESP-IDF, complete with Wi-Fi reconnection loops, sensor libraries, and MQTT telemetry logic."
     },
     {
       q: "Can I export my Bill of Materials (BOM) and documentation?",
@@ -71,222 +75,249 @@ export const LandingPage: React.FC = () => {
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Describe your idea. IoTForge creates the verified components, pin-to-pin wiring, CAD blueprint, system architecture, firmware code, and step-by-step build guide.
+            Describe your idea. ProjectHub creates the verified components, pin-to-pin wiring, CAD blueprint, system architecture, firmware code, and step-by-step build guide.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/signup"
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-base transition-all shadow-xl shadow-cyan-500/20 active:scale-95"
-            >
-              <span>Start Building Free</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a
-              href="#examples"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#202938] hover:border-slate-600 bg-[#101620] text-slate-300 hover:text-white font-medium text-base transition-colors"
-            >
-              Explore Example Projects
-            </a>
-          </div>
-
-          {/* Animated Engineering Workspace Preview Widget */}
-          <div className="mt-16 max-w-5xl mx-auto rounded-2xl border border-[#202938] bg-[#0E1420] shadow-2xl overflow-hidden text-left">
-            {/* Window Titlebar */}
-            <div className="h-11 px-4 bg-[#101622] border-b border-[#202938] flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                <span className="ml-3 text-xs font-mono text-slate-400 flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>workspace://smart_irrigation_esp32_v1</span>
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setPreviewTab('wiring')}
-                  className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${previewTab === 'wiring' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'text-slate-400 hover:text-white'}`}
-                >
-                  Wiring Canvas
-                </button>
-                <button
-                  onClick={() => setPreviewTab('code')}
-                  className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${previewTab === 'code' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'text-slate-400 hover:text-white'}`}
-                >
-                  Firmware C++
-                </button>
-                <button
-                  onClick={() => setPreviewTab('bom')}
-                  className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${previewTab === 'bom' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'text-slate-400 hover:text-white'}`}
-                >
-                  BOM Table
-                </button>
-              </div>
-            </div>
-
-            {/* Preview Body */}
-            <div className="p-6 bg-[#090D16] min-h-[340px] flex items-center justify-center">
-              {previewTab === 'wiring' && (
-                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                  <div className="p-4 rounded-xl border border-cyan-500/40 bg-[#101726] shadow-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs text-cyan-400 font-bold">ESP32 DevKit V1</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/40">MCU</span>
-                    </div>
-                    <div className="space-y-1.5 font-mono text-[11px] text-slate-300">
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1"><span>GPIO21 (SDA)</span><span className="text-cyan-400">→ OLED</span></div>
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1"><span>GPIO34 (ADC1)</span><span className="text-emerald-400">→ Soil Sensor</span></div>
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1"><span>GPIO4 (Data)</span><span className="text-amber-400">→ DHT22</span></div>
-                      <div className="flex justify-between"><span>GPIO26 (IN)</span><span className="text-purple-400">→ 5V Relay</span></div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <div className="w-full flex items-center justify-center gap-2 font-mono text-xs text-slate-400">
-                      <span className="w-8 h-px bg-cyan-500/40" />
-                      <span className="text-cyan-400">I2C / ADC / 1-Wire Netlist</span>
-                      <span className="w-8 h-px bg-cyan-500/40" />
-                    </div>
-                    <div className="px-4 py-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono text-xs flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>Zero Pin Collisions Detected</span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-xl border border-purple-500/40 bg-[#151024] shadow-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs text-purple-300 font-bold">5V Relay & 12V Pump</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800/40">Actuator</span>
-                    </div>
-                    <div className="space-y-1.5 font-mono text-[11px] text-slate-300">
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1"><span>Trigger</span><span className="text-purple-400">Active LOW</span></div>
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1"><span>Isolation</span><span className="text-emerald-400">Optocoupled</span></div>
-                      <div className="flex justify-between"><span>Load Supply</span><span className="text-amber-400">12V 2A DC PSU</span></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {previewTab === 'code' && (
-                <pre className="w-full font-mono text-xs text-slate-300 p-4 rounded-lg bg-black/60 border border-[#202938] overflow-x-auto leading-relaxed">
-                  <code>{`#include <WiFi.h>
-#include <PubSubClient.h>
-
-#define SOIL_PIN 34
-#define RELAY_PIN 26
-
-void setup() {
-  pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, HIGH); // Safe initial state
-  WiFi.begin("SSID", "PASS");
-}
-
-void loop() {
-  int moisture = analogRead(SOIL_PIN);
-  if (moisture > 3000) {
-    digitalWrite(RELAY_PIN, LOW); // Trigger pump
-  }
-}`}</code>
-                </pre>
-              )}
-
-              {previewTab === 'bom' && (
-                <div className="w-full overflow-x-auto">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="border-b border-[#202938] text-slate-400">
-                      <tr>
-                        <th className="py-2">Component</th>
-                        <th className="py-2">Qty</th>
-                        <th className="py-2">Unit Price</th>
-                        <th className="py-2">Vendor</th>
-                        <th className="py-2">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#202938]/60 text-slate-300">
-                      <tr><td className="py-2 text-cyan-400">ESP32 DevKit V1</td><td>1</td><td>$6.20</td><td>Adafruit</td><td className="text-emerald-400">Verified Price</td></tr>
-                      <tr><td className="py-2 text-cyan-400">Capacitive Moisture Sensor</td><td>1</td><td>$2.95</td><td>SparkFun</td><td className="text-emerald-400">In Stock</td></tr>
-                      <tr><td className="py-2 text-cyan-400">5V Optocoupled Relay</td><td>1</td><td>$2.10</td><td>DigiKey</td><td className="text-emerald-400">In Stock</td></tr>
-                      <tr><td className="py-2 text-cyan-400">12V Submersible Pump</td><td>1</td><td>$7.99</td><td>Amazon</td><td className="text-amber-400">Estimated</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Interactive Generator Preview */}
-      <section className="py-20 border-b border-[#202938] bg-[#0A0F1A]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-3xl font-bold text-white">Try Prompting the Builder</h2>
-            <p className="mt-3 text-slate-400 text-sm">
-              Click an engineering concept below or type your custom requirement to start building immediately.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-            {examplePrompts.map((p, idx) => (
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const input = new FormData(e.currentTarget).get('prompt') as string;
+            if (input?.trim()) {
+              navigate('/projects/new', { state: { templatePrompt: input } });
+            } else {
+              navigate('/projects/new');
+            }
+          }} className="mt-12 max-w-2xl mx-auto relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative flex items-center p-2 rounded-2xl bg-[#0E1522]/90 border border-[#202938] group-hover:border-cyan-500/50 backdrop-blur-xl transition-colors shadow-2xl">
+              <Terminal className="w-6 h-6 text-cyan-400 shrink-0 ml-4" />
+              <input
+                type="text"
+                name="prompt"
+                placeholder="e.g. Build a smart home security system with PIR sensors..."
+                className="flex-1 bg-transparent border-none px-4 py-3 text-slate-100 text-base focus:outline-none placeholder-slate-500 font-medium"
+              />
               <button
-                key={idx}
-                onClick={() => navigate('/projects/new', { state: { templatePrompt: p.text } })}
-                className="p-4 rounded-xl border border-[#202938] bg-[#101620] hover:border-cyan-500/50 hover:bg-[#131B29] transition-all text-left group"
+                type="submit"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/25 active:scale-95 shrink-0"
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-semibold text-sm text-slate-200 group-hover:text-cyan-400">{p.title}</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-transform group-hover:translate-x-1" />
-                </div>
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{p.text}</p>
+                <Sparkles className="w-4 h-4" />
+                <span className="hidden sm:inline">Generate</span>
               </button>
-            ))}
-          </div>
+            </div>
+          </form>
 
-          <div className="p-3 rounded-2xl border border-cyan-500/30 bg-[#0E1522] shadow-2xl flex items-center gap-3">
-            <Terminal className="w-5 h-5 text-cyan-400 shrink-0 ml-3" />
-            <input
-              type="text"
-              readOnly
-              value="Build an industrial telemetry node with ESP32, K-type thermocouple, MAX6675 digitizer and Modbus/TCP..."
-              className="flex-1 bg-transparent border-none text-slate-300 text-sm focus:outline-none cursor-pointer"
-              onClick={() => navigate('/projects/new')}
-            />
-            <button
-              onClick={() => navigate('/projects/new')}
-              className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors shrink-0"
-            >
-              Generate
-            </button>
-          </div>
+
         </div>
       </section>
+
+
 
       {/* 3. How It Works */}
-      <section id="how-it-works" className="py-24 border-b border-[#202938]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <Badge variant="cyan" size="sm">Pipeline</Badge>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white">How IoTForge Transforms Your Idea</h2>
-            <p className="mt-3 text-slate-400 text-sm">
-              From natural language idea to ready-to-solder schematics in under 10 seconds.
-            </p>
+      <section id="how-it-works" className="relative py-32 border-b border-[#202938] overflow-hidden bg-[#05070B]">
+        {/* Background Grid & Gradient */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 -z-10 m-auto h-[400px] w-[600px] rounded-[100%] bg-cyan-900/10 opacity-30 blur-[120px]"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Floating Decorative Elements */}
+          <div className="hidden lg:flex absolute top-4 left-4 -rotate-6 animate-pulse flex-col p-3 rounded-xl border border-cyan-500/20 bg-cyan-950/20 shadow-[0_0_30px_-5px_rgba(6,182,212,0.1)] backdrop-blur-sm z-0">
+             <div className="w-6 h-6 rounded bg-cyan-500/20 flex items-center justify-center mb-2">
+               <Terminal className="w-3 h-3 text-cyan-400" />
+             </div>
+             <div className="h-1.5 w-20 bg-cyan-500/30 rounded mb-1.5"></div>
+             <div className="h-1.5 w-12 bg-cyan-500/20 rounded"></div>
+          </div>
+          
+          <div className="hidden lg:block absolute top-0 right-10 rotate-6 p-4 rounded-xl border border-indigo-500/20 bg-indigo-950/20 shadow-[0_0_40px_-5px_rgba(99,102,241,0.15)] backdrop-blur-sm z-0">
+             <div className="grid grid-cols-2 gap-2">
+                <div className="w-10 h-10 rounded-lg border border-indigo-500/30 bg-indigo-500/10 flex items-center justify-center shadow-inner">
+                  <Cpu className="w-5 h-5 text-indigo-400" />
+                </div>
+                <div className="w-10 h-10 rounded-lg border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shadow-inner">
+                  <Activity className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div className="w-10 h-10 rounded-lg border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-inner">
+                  <Zap className="w-5 h-5 text-purple-400" />
+                </div>
+                <div className="w-10 h-10 rounded-lg border border-cyan-500/30 bg-cyan-500/10 flex items-center justify-center shadow-inner">
+                  <Server className="w-5 h-5 text-cyan-400" />
+                </div>
+             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {[
-              { step: "01", title: "Natural Language Prompt", desc: "Describe your project requirements, target controller, and power constraints.", icon: Terminal },
-              { step: "02", title: "AI Hardware Synthesis", desc: "Selects sensors, actuators, voltage regulators, and microcontrollers based on electrical specs.", icon: Cpu },
-              { step: "03", title: "Compatibility Validation", desc: "Enforces voltage level shifting, motor flyback protection, and pin mapping rules.", icon: ShieldAlert },
-              { step: "04", title: "Engineering Workspace", desc: "Generates interactive React Flow wiring, Monaco firmware C++, BOM table, and build guide.", icon: Code2 }
-            ].map((s, idx) => (
-              <div key={idx} className="relative p-6 rounded-xl border border-[#202938] bg-[#101620] hover:border-cyan-500/40 transition-colors">
-                <span className="font-mono text-3xl font-extrabold text-slate-700/60 mb-3 block">{s.step}</span>
-                <s.icon className="w-6 h-6 text-cyan-400 mb-4" />
-                <h3 className="text-base font-bold text-slate-100 mb-2">{s.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{s.desc}</p>
+          <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
+            <div className="mb-4">
+              <Badge variant="cyan" size="sm">Pipeline</Badge>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+              How ProjectHub Transforms Your Idea
+            </h2>
+            <p className="text-slate-400 text-base sm:text-lg mb-10">
+              From natural language idea to ready-to-solder schematics in under 10 seconds.
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-medium text-purple-300">
+                <Zap className="w-3.5 h-3.5" /> AI-Powered Engineering
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs font-medium text-emerald-300">
+                <Cpu className="w-3.5 h-3.5" /> Real Components
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-xs font-medium text-blue-300">
+                <ShieldAlert className="w-3.5 h-3.5" /> Verified Design Rules
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-medium text-purple-300">
+                <Layers className="w-3.5 h-3.5" /> Production-Ready Output
+              </span>
+            </div>
+          </div>
+
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {/* Desktop Connectors with Glowing Arrows */}
+            <div className="hidden lg:flex absolute top-[25%] left-[20%] right-[20%] z-0 items-center justify-between pointer-events-none">
+              <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/20 to-emerald-500/50 relative">
+                <div className="absolute -right-3 -top-3 w-6 h-6 flex items-center justify-center animate-pulse">
+                  <ChevronRight className="w-6 h-6 text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                </div>
               </div>
-            ))}
+              <div className="flex-1 h-px bg-gradient-to-r from-emerald-500/50 to-purple-500/50 relative">
+                <div className="absolute -right-3 -top-3 w-6 h-6 flex items-center justify-center animate-pulse" style={{ animationDelay: '200ms' }}>
+                  <ChevronRight className="w-6 h-6 text-purple-500 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                </div>
+              </div>
+              <div className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-amber-500/50 relative">
+                <div className="absolute -right-3 -top-3 w-6 h-6 flex items-center justify-center animate-pulse" style={{ animationDelay: '400ms' }}>
+                  <ChevronRight className="w-6 h-6 text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
+                </div>
+              </div>
+            </div>
+            
+            {[
+              { step: "01", title: "Natural Language Prompt", desc: "Describe your project requirements, target controller, and power constraints.", icon: Terminal, color: "cyan", numColor: "text-cyan-900/40 group-hover:text-cyan-800/60" },
+              { step: "02", title: "AI Hardware Synthesis", desc: "Selects sensors, actuators, voltage regulators, and microcontrollers based on electrical specs.", icon: Cpu, color: "emerald", numColor: "text-emerald-900/40 group-hover:text-emerald-800/60" },
+              { step: "03", title: "Compatibility Validation", desc: "Enforces voltage level shifting, motor flyback protection, and pin mapping rules.", icon: ShieldAlert, color: "purple", numColor: "text-purple-900/40 group-hover:text-purple-800/60" },
+              { step: "04", title: "Engineering Workspace", desc: "Generates interactive React Flow wiring, Monaco firmware C++, BOM table, and build guide.", icon: Code2, color: "amber", numColor: "text-amber-900/40 group-hover:text-amber-800/60" }
+            ].map((s, idx) => {
+              const borderColors = {
+                cyan: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_20px_-5px_rgba(6,182,212,0.15)]",
+                emerald: "group-hover:border-emerald-500/50 group-hover:shadow-[0_0_20px_-5px_rgba(16,185,129,0.15)]",
+                purple: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.15)]",
+                amber: "group-hover:border-amber-500/50 group-hover:shadow-[0_0_20px_-5px_rgba(245,158,11,0.15)]",
+              }[s.color as 'cyan'|'emerald'|'purple'|'amber'];
+
+              const iconBgColors = {
+                cyan: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]",
+                emerald: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.8)]",
+                purple: "bg-purple-500/10 border-purple-500/20 text-purple-400 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]",
+                amber: "bg-amber-500/10 border-amber-500/20 text-amber-400 group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]",
+              }[s.color as 'cyan'|'emerald'|'purple'|'amber'];
+
+              return (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -6 }}
+                  key={idx}
+                  className={`group flex flex-col h-full relative z-10 p-6 sm:p-7 rounded-[18px] bg-[#0E1522] border border-slate-800/80 transition-all duration-300 ${borderColors}`}
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300 ${iconBgColors}`}>
+                      <s.icon className="w-5 h-5" />
+                    </div>
+                    <span className={`font-mono text-4xl font-extrabold transition-colors duration-300 ${s.numColor}`}>{s.step}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-100 mb-3 group-hover:text-white transition-colors">{s.title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors mb-auto">{s.desc}</p>
+                  
+                  {s.step === "01" && (
+                    <div className="mt-8 flex flex-col gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-2.5 py-1 rounded-full border border-slate-700/50 bg-slate-800/30 text-[10px] font-medium text-slate-300">Smart Home</span>
+                        <span className="px-2.5 py-1 rounded-full border border-slate-700/50 bg-slate-800/30 text-[10px] font-medium text-slate-300">Agriculture</span>
+                        <span className="px-2.5 py-1 rounded-full border border-slate-700/50 bg-slate-800/30 text-[10px] font-medium text-slate-300">Monitoring</span>
+                      </div>
+                      <div className="p-3 rounded-lg bg-cyan-950/20 border border-cyan-900/30 relative">
+                        <p className="text-[10px] text-cyan-200/70 leading-relaxed font-mono">Build a smart irrigation system using ESP32, soil moisture sensor, relay and water pump...</p>
+                        <div className="absolute -bottom-2 -right-2 w-6 h-6 rounded bg-cyan-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                          <Terminal className="w-3 h-3 text-slate-950" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {s.step === "02" && (
+                    <div className="mt-8 grid grid-cols-2 gap-2">
+                      <div className="aspect-video rounded-lg border border-slate-800 bg-[#131B29] flex items-center justify-center shadow-inner">
+                        <Cpu className="w-6 h-6 text-slate-500" />
+                      </div>
+                      <div className="aspect-video rounded-lg border border-slate-800 bg-[#131B29] flex items-center justify-center shadow-inner">
+                        <Activity className="w-6 h-6 text-slate-500" />
+                      </div>
+                      <div className="aspect-video rounded-lg border border-slate-800 bg-[#131B29] flex items-center justify-center shadow-inner">
+                        <Zap className="w-6 h-6 text-slate-500" />
+                      </div>
+                      <div className="aspect-video rounded-lg border border-slate-800 bg-[#131B29] flex items-center justify-center shadow-inner">
+                        <Radio className="w-6 h-6 text-slate-500" />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {s.step === "03" && (
+                    <div className="mt-8 flex flex-col gap-2">
+                      {['Voltage Compatibility', 'GPIO Pin Mapping', 'Motor Protection', 'Power Budget Analysis'].map((item, i) => (
+                        <div key={i} className="flex items-center justify-between text-[11px] text-slate-300 bg-slate-800/20 p-2 rounded-lg border border-slate-800/50">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                            <span>{item}</span>
+                          </div>
+                          <ChevronDown className="w-3 h-3 text-slate-600 -rotate-90" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {s.step === "04" && (
+                    <div className="mt-8 rounded-lg border border-slate-800 bg-[#0A0F1A] overflow-hidden flex flex-col">
+                      <div className="flex text-[9px] font-mono border-b border-slate-800">
+                        <span className="px-3 py-1.5 border-r border-slate-800 text-amber-400 bg-amber-950/10">Code</span>
+                        <span className="px-3 py-1.5 border-r border-slate-800 text-slate-500">BOM</span>
+                        <span className="px-3 py-1.5 text-slate-500">Guide</span>
+                      </div>
+                      <div className="p-3 bg-[#0A0F1A] grid grid-cols-2 gap-2 h-24">
+                        <div className="border border-slate-800 rounded bg-[#131B29] relative overflow-hidden flex items-center justify-center">
+                           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:4px_4px]"></div>
+                           <Activity className="w-5 h-5 text-slate-600 relative z-10" />
+                        </div>
+                        <div className="font-mono text-[6px] text-slate-400 leading-tight flex flex-col justify-center">
+                          <div><span className="text-pink-500">#include</span> &lt;WiFi.h&gt;</div>
+                          <div><span className="text-pink-500">#include</span> &lt;DHT.h&gt;</div>
+                          <div><span className="text-slate-500">// Smart Irrigation</span></div>
+                          <div><span className="text-blue-400">void</span> <span className="text-yellow-200">setup</span>() {'{'}</div>
+                          <div>&nbsp;&nbsp;Serial.<span className="text-yellow-200">begin</span>(115200);</div>
+                          <div>{'}'}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Bottom Indicators */}
+          <div className="mt-16 pt-8 border-t border-slate-800/50 flex flex-wrap items-center justify-center lg:justify-between gap-4 max-w-4xl mx-auto font-mono text-[10px] font-bold text-slate-500 tracking-widest uppercase">
+            <span className="text-cyan-500/80">IDEA</span>
+            <ArrowRight className="hidden lg:block w-3.5 h-3.5 text-slate-700" />
+            <span className="text-emerald-500/80">COMPONENTS</span>
+            <ArrowRight className="hidden lg:block w-3.5 h-3.5 text-slate-700" />
+            <span className="text-purple-500/80">VALIDATION</span>
+            <ArrowRight className="hidden lg:block w-3.5 h-3.5 text-slate-700" />
+            <span className="text-amber-500/80">READY TO BUILD</span>
           </div>
         </div>
       </section>
@@ -364,33 +395,35 @@ void loop() {
       </section>
 
       {/* 7. Bottom CTA */}
-      <section className="py-20 text-center bg-tech-grid">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white">Ready to Build Your IoT Project?</h2>
-          <p className="mt-4 text-slate-400 text-sm max-w-xl mx-auto">
-            Stop manually matching GPIOs and guessing component compatibility. Let IoTForge engineer your complete buildable workspace in seconds.
-          </p>
-          <div className="mt-8">
-            <Link
-              to="/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-base transition-all shadow-xl shadow-cyan-500/20 active:scale-95"
-            >
-              <span>Get Started Now</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+      {!isAuthenticated && (
+        <section className="py-20 text-center bg-tech-grid">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white">Ready to Build Your IoT Project?</h2>
+            <p className="mt-4 text-slate-400 text-sm max-w-xl mx-auto">
+              Stop manually matching GPIOs and guessing component compatibility. Let ProjectHub engineer your complete buildable workspace in seconds.
+            </p>
+            <div className="mt-8">
+              <Link
+                to="/signup"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-base transition-all shadow-xl shadow-cyan-500/20 active:scale-95"
+              >
+                <span>Get Started Now</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 8. Footer */}
       <footer className="py-12 border-t border-[#202938] bg-[#07090F] text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-cyan-400" />
-            <span className="font-bold text-slate-300">IoTForge</span>
+            <span className="font-bold text-slate-300">ProjectHub</span>
             <span>— AI-Powered IoT Project Builder</span>
           </div>
-          <p>© 2026 IoTForge SaaS Engineering Platform. All rights reserved.</p>
+          <p>© 2026 ProjectHub SaaS Engineering Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>
