@@ -17,12 +17,11 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function() {
   if (this.isModified('name') || this.isNew) this.Name = this.name;
   if (this.isModified('email') || this.isNew) this.Email = this.email;
   if (this.isModified('password') || this.isNew) this.PasswordHash = this.password;
   if (this.isModified('role') || this.isNew) this.Role = this.role;
-  next();
 });
 
 export default mongoose.model('User', userSchema);
