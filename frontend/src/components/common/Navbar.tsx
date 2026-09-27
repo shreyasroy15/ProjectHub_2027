@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Cpu, ArrowRight, User as UserIcon, LayoutDashboard, LogOut } from 'lucide-react';
+import { ArrowRight, User as UserIcon, LayoutDashboard, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import projecthubLogo from '../../assets/projecthub-logo.png';
 
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -11,18 +12,12 @@ export const Navbar: React.FC = () => {
     <nav className="sticky top-0 z-40 w-full border-b border-[#202938] bg-[#080B12]/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-            <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-              ProjectHub
-              <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/40">
-                SaaS
-              </span>
-            </span>
-          </div>
+        <Link to="/" className="flex items-center group shrink-0 py-1">
+          <img
+            src={projecthubLogo}
+            alt="ProjectHub - From Idea to Hardware"
+            className="h-8 sm:h-9 md:h-10 w-auto object-contain mix-blend-screen transition-transform duration-200 group-hover:scale-105"
+          />
         </Link>
 
         {/* Center Links */}
