@@ -16,6 +16,10 @@
     --accent-red: #EF4444;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--bg-base);
     color: #E2E8F0;

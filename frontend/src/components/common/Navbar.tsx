@@ -11,12 +11,12 @@ export const Navbar: React.FC = () => {
     <nav className="sticky top-0 z-40 w-full border-b border-[#202938] bg-[#080B12]/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-            <Cpu className="w-5 h-5 text-slate-950" />
+        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+            <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+            <span className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
               ProjectHub
               <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/40">
                 SaaS
@@ -34,47 +34,47 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Right CTA */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {isAuthenticated ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {isAdmin && (
                 <Link
                   to="/admin"
-                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-950/30 text-cyan-300 text-sm font-medium hover:bg-cyan-950/60 transition-colors"
+                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-950/30 text-cyan-300 text-xs sm:text-sm font-medium hover:bg-cyan-950/60 transition-colors"
                 >
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>Admin Panel</span>
+                  <LayoutDashboard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Admin Panel</span>
                 </Link>
               )}
-              <div className="flex items-center gap-2.5 ml-1 mr-1">
-                <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-slate-300">
+              <div className="flex items-center gap-2 ml-0.5 sm:ml-1 mr-0.5 sm:mr-1">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-slate-300">
                   {user?.name.charAt(0) || 'U'}
                 </div>
-                <span className="text-sm font-semibold text-slate-200 hidden sm:inline-block">{user?.name}</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-200 hidden sm:inline-block max-w-[120px] truncate">{user?.name}</span>
               </div>
-              <div className="h-5 w-px bg-[#202938] mx-1" />
+              <div className="h-4 sm:h-5 w-px bg-[#202938] mx-0.5 sm:mx-1" />
               <button
                 onClick={() => { logout(); navigate('/'); }}
-                className="p-2 rounded-lg border border-[#202938] hover:border-rose-500/40 text-slate-400 hover:text-rose-400 transition-colors"
+                className="p-1.5 sm:p-2 rounded-lg border border-[#202938] hover:border-rose-500/40 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
                 title="Log Out"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 to="/login"
-                className="text-sm font-medium text-slate-300 hover:text-white px-3 py-1.5 transition-colors"
+                className="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-2.5 sm:px-3 py-1.5 transition-colors"
               >
                 Log In
               </Link>
               <Link
                 to="/signup"
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-sm font-semibold transition-all shadow-md shadow-cyan-500/20 active:scale-[0.98]"
+                className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs sm:text-sm font-semibold transition-all shadow-md shadow-cyan-500/20 active:scale-[0.98]"
               >
                 <span>Start Building</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </Link>
             </div>
           )}

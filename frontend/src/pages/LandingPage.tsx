@@ -27,7 +27,7 @@ export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [previewTab, setPreviewTab] = useState<'wiring' | 'code' | 'bom'>('wiring');
+  const [promptInput, setPromptInput] = useState('');
 
   const examplePrompts = [
     { title: "Smart Irrigation", text: "Build a smart irrigation system using ESP32, soil moisture sensors, temperature monitoring and automatic water pump control." },
@@ -35,6 +35,19 @@ export const LandingPage: React.FC = () => {
     { title: "RFID Attendance", text: "Build an RFID attendance system using ESP32, RC522 card reader, RGB indicator and server-side employee verification." },
     { title: "Home Security", text: "Build a smart home security system with PIR motion sensors, magnetic door contacts, buzzer alarm and push notifications." }
   ];
+
+  const handlePromptSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (promptInput.trim()) {
+      navigate('/projects/new', { state: { templatePrompt: promptInput.trim() } });
+    } else {
+      navigate('/projects/new');
+    }
+  };
+
+  const handleSelectExample = (promptText: string) => {
+    setPromptInput(promptText);
+  };
 
   const faqs = [
     {
@@ -60,53 +73,105 @@ export const LandingPage: React.FC = () => {
       <Navbar />
 
       {/* 1. Hero Section */}
-      <section className="relative pt-20 pb-28 overflow-hidden bg-tech-grid border-b border-[#202938]">
-        {/* Ambient Gradient Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-cyan-500/10 via-blue-500/10 to-transparent blur-3xl pointer-events-none" />
+      <section className="relative min-h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)] w-full flex flex-col justify-between items-center overflow-hidden bg-tech-grid border-b border-[#202938] px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        {/* Ambient Gradient Glow & Subtle Vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#080B12_95%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[620px] lg:w-[900px] h-[260px] sm:h-[420px] bg-gradient-to-tr from-cyan-500/15 via-blue-500/10 to-transparent blur-[90px] sm:blur-[130px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-xs font-mono mb-8 animate-in fade-in slide-in-from-top-4">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>AI-Powered IoT Engineering Workspace</span>
+        {/* Top spacer for clean vertical balance on desktop */}
+        <div className="hidden sm:block h-2" aria-hidden="true" />
+
+        {/* Center Hero Content */}
+        <div className="max-w-5xl w-full mx-auto text-center relative z-10 my-auto flex flex-col items-center">
+          {/* Tag Pill */}
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-[11px] sm:text-xs font-mono mb-6 sm:mb-8 animate-in fade-in slide-in-from-top-4 shadow-sm shadow-cyan-500/10">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0 animate-pulse" />
+            <span className="truncate">AI-Powered IoT Engineering Workspace</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
-            Build Your IoT Project <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">With AI</span>
+          {/* Headline */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.14] sm:leading-[1.1]">
+            Build Your IoT Project{" "}
+            <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">
+              With AI
+            </span>
           </h1>
 
-          <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          {/* Subtitle */}
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-slate-400 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed px-2">
             Describe your idea. ProjectHub creates the verified components, pin-to-pin wiring, CAD blueprint, system architecture, firmware code, and step-by-step build guide.
           </p>
 
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const input = new FormData(e.currentTarget).get('prompt') as string;
-            if (input?.trim()) {
-              navigate('/projects/new', { state: { templatePrompt: input } });
-            } else {
-              navigate('/projects/new');
-            }
-          }} className="mt-12 max-w-2xl mx-auto relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative flex items-center p-2 rounded-2xl bg-[#0E1522]/90 border border-[#202938] group-hover:border-cyan-500/50 backdrop-blur-xl transition-colors shadow-2xl">
-              <Terminal className="w-6 h-6 text-cyan-400 shrink-0 ml-4" />
+          {/* Interactive Prompt Input Bar */}
+          <form
+            onSubmit={handlePromptSubmit}
+            className="mt-8 sm:mt-10 w-full max-w-2xl mx-auto relative group px-1 sm:px-0"
+          >
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-45 transition duration-500"></div>
+            <div className="relative flex items-center p-1.5 sm:p-2 rounded-2xl bg-[#0E1522]/95 border border-[#202938] group-hover:border-cyan-500/50 backdrop-blur-xl transition-all shadow-2xl">
+              <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 shrink-0 ml-2.5 sm:ml-4" />
               <input
                 type="text"
                 name="prompt"
+                value={promptInput}
+                onChange={(e) => setPromptInput(e.target.value)}
                 placeholder="e.g. Build a smart home security system with PIR sensors..."
-                className="flex-1 bg-transparent border-none px-4 py-3 text-slate-100 text-base focus:outline-none placeholder-slate-500 font-medium"
+                className="w-full min-w-0 bg-transparent border-none px-2.5 sm:px-4 py-2.5 sm:py-3 text-slate-100 text-sm sm:text-base focus:outline-none placeholder-slate-500 font-medium"
               />
               <button
                 type="submit"
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/25 active:scale-95 shrink-0"
+                className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cyan-500/25 active:scale-95 shrink-0 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4" />
-                <span className="hidden sm:inline">Generate</span>
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>Generate</span>
               </button>
             </div>
           </form>
 
+          {/* Suggestion Chips */}
+          <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-3xl mx-auto px-2">
+            <span className="text-[11px] sm:text-xs text-slate-500 font-medium mr-1">Try:</span>
+            {examplePrompts.map((p, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => handleSelectExample(p.text)}
+                className="text-[11px] sm:text-xs px-2.5 py-1 rounded-full border border-slate-800 bg-[#0E1522]/80 hover:bg-slate-800/80 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer"
+              >
+                {p.title}
+              </button>
+            ))}
+          </div>
 
+          {/* Verified Capabilities Trust Strip */}
+          <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-400 max-w-3xl mx-auto px-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
+              <span>Zero-Collision Pinout</span>
+            </div>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
+              <span>Voltage & Flyback Checks</span>
+            </div>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
+              <span>C++ / PlatformIO Ready</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Explore / Scroll Cue */}
+        <div className="w-full relative z-10 pt-4 pb-2 text-center">
+          <a
+            href="#how-it-works"
+            className="inline-flex flex-col items-center text-xs text-slate-500 hover:text-cyan-400 transition-colors group cursor-pointer"
+            aria-label="Scroll to How It Works"
+          >
+            <span className="text-[10px] sm:text-[11px] font-mono tracking-wider uppercase opacity-70 group-hover:opacity-100 transition-opacity">
+              Explore Pipeline
+            </span>
+            <ChevronDown className="w-4 h-4 animate-bounce mt-1 text-slate-500 group-hover:text-cyan-400" />
+          </a>
         </div>
       </section>
 
