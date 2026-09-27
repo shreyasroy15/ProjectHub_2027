@@ -12,11 +12,11 @@ export const Navbar: React.FC = () => {
     <nav className="sticky top-0 z-40 w-full border-b border-[#202938] bg-[#080B12]/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center group shrink-0 py-1">
+        <Link to="/" className="flex items-center group shrink-0 py-1" aria-label="ProjectHub Home">
           <img
             src={projecthubLogo}
             alt="ProjectHub - From Idea to Hardware"
-            className="h-8 sm:h-9 md:h-10 w-auto object-contain mix-blend-screen transition-transform duration-200 group-hover:scale-105"
+            className="h-9 sm:h-10 md:h-11 w-auto max-w-[130px] sm:max-w-[150px] md:max-w-[170px] object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.3)] group-hover:drop-shadow-[0_0_18px_rgba(6,182,212,0.6)] transition-all duration-300 group-hover:scale-[1.03]"
           />
         </Link>
 

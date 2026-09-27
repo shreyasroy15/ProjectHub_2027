@@ -145,9 +145,9 @@ export const LandingPage: React.FC = () => {
             <img
               src={projecthubLogo}
               alt="ProjectHub"
-              className="h-7 w-auto object-contain mix-blend-screen opacity-90"
+              className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]"
             />
-            <span className="text-slate-500">— AI-Powered IoT Project Builder</span>
+            <span className="text-slate-400 hidden sm:inline">— AI-Powered IoT Project Builder</span>
           </div>
           <p>© 2026 ProjectHub SaaS Engineering Platform. All rights reserved.</p>
         </div>
